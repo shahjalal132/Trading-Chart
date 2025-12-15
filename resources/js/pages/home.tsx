@@ -1,10 +1,14 @@
+import Accounts from '@/components/sections/Accounts';
+import Community from '@/components/sections/Community';
 import Contact from '@/components/sections/Contact';
 import Counter from '@/components/sections/Counter';
 import Footer from '@/components/sections/Footer';
 import Header from '@/components/sections/Header';
 import Hero from '@/components/sections/Hero';
+import Marketing from '@/components/sections/Marketing';
 import Resources from '@/components/sections/Resources';
 import Trade from '@/components/sections/Trade';
+import Video from '@/components/sections/Video';
 import React from 'react';
 
 export default function Home(): React.JSX.Element {
@@ -29,13 +33,25 @@ export default function Home(): React.JSX.Element {
                     <Counter />
                 </div>
                 <div className="container mx-auto w-full">
-                    <Resources/>
+                    <Resources />
                 </div>
                 <div className="container mx-auto w-full">
-                  <Trade/>
+                    <Trade />
                 </div>
                 <div className="container mx-auto w-full">
                     <Contact />
+                </div>
+                <div className="container mx-auto w-full">
+                    <Marketing />
+                </div>
+                <div className="container mx-auto w-full">
+                    <Accounts/>
+                </div>
+                <div className="container mx-auto w-full">
+                    <Video/>
+                </div>
+                <div className="container mx-auto w-full">
+                    <Community/>
                 </div>
                 <Footer />
             </div>

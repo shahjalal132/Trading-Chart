@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Trade() {
   return (
-    <div className="relative flex items-start w-full min-h-screen bg-gradient-to-br from-gray-900 to-black">
+    <div className="relative flex items-start w-full">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[695px]">
           <div className="flex flex-col gap-12 max-w-[691px]">
