@@ -2,7 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import React from "react";
 
-const resourcesData = [
+interface ResourcesData {
+  title: string;
+  features: string[];
+  price: string;
+}
+
+const resourcesData: ResourcesData[] = [
   {
     title: "CONSULTATION",
     features: [

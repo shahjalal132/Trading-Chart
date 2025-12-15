@@ -3,8 +3,8 @@ import Counter from '@/components/sections/Counter';
 import Footer from '@/components/sections/Footer';
 import Header from '@/components/sections/Header';
 import Hero from '@/components/sections/Hero';
-import Platforms from '@/components/sections/Platforms';
 import Resources from '@/components/sections/Resources';
+import Trade from '@/components/sections/Trade';
 import React from 'react';
 
 export default function Home(): React.JSX.Element {
@@ -32,7 +32,7 @@ export default function Home(): React.JSX.Element {
                     <Resources/>
                 </div>
                 <div className="container mx-auto w-full">
-                    <Platforms />
+                  <Trade/>
                 </div>
                 <div className="container mx-auto w-full">
                     <Contact />
