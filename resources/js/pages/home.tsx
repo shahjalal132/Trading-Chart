@@ -16,11 +16,16 @@ export default function Home(): React.JSX.Element {
         <div className="relative min-h-screen w-full overflow-hidden bg-black">
             {/* Hero section background */}
             <div className="relative z-10">
-                <div className="pointer-events-none absolute top-0 left-0 h-[897px] w-full bg-[var(--header-bg)]" />
+                {/* <div className="pointer-events-none absolute top-0 left-0 h-[897px] w-full bg-[var(--header-bg)]" /> */}
 
                 <div className="relative flex w-full flex-col">
                     <Header />
-                    <div className="flex min-h-[897px] items-center bg-[var(--header-bg)] pb-24">
+                    <div
+                        className="flex min-h-screen items-center pb-24 bg-cover bg-center bg-no-repeat"
+                        style={{
+                            backgroundImage: "url('/assets/images/hero-bg.jpg')",
+                        }}
+                    >
                         <div className="container mx-auto w-full px-4 md:px-[220px]">
                             <Hero />
                         </div>

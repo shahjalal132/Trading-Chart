@@ -17,7 +17,7 @@ export default function Hero(): React.JSX.Element {
     ];
 
     return (
-        <section className="flex w-full flex-col">
+        <section className="flex w-full flex-col bg-red-500">
             <div className="flex w-full flex-col gap-10">
                 <h1 className="[font-family:'Helvetica_Neue-Bold',Helvetica] text-[110px] leading-[93px] font-bold tracking-[0] whitespace-nowrap text-white">
                     Welcome to
