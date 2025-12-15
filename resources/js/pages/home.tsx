@@ -25,11 +25,11 @@ export default function Home(): React.JSX.Element {
             </div>
 
             <div className="relative z-10 flex flex-col">
-                <div className="container mx-auto w-full py-10 md:py-20">
+                <div className="container mx-auto w-full py-10">
                     <Counter />
                 </div>
                 <div className="container mx-auto w-full">
-                    <Resources />
+                    <Resources/>
                 </div>
                 <div className="container mx-auto w-full">
                     <Platforms />

@@ -1,91 +1,111 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import React from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import React from "react";
 
-const resourceCards = [
-    {
-        title: 'VIP SIGNALS',
-        subtitle: 'all in one place, with an easy step',
-        features: [
-            'In-depth market analysis',
-            'Competitor keyword tracking',
-            'Long-tail keyword identification',
-            'Long-tail keyword identification',
-        ],
-    },
-    {
-        title: 'MASTER TRADING VOURSE',
-        subtitle: 'all in one place, with an easy step',
-        features: [
-            'In-depth market analysis',
-            'Competitor keyword tracking',
-            'Long-tail keyword identification',
-            'Long-tail keyword identification',
-        ],
-    },
-    {
-        title: 'COPY TRADE',
-        subtitle: 'all in one place, with an easy step',
-        features: [
-            'In-depth market analysis',
-            'Competitor keyword tracking',
-            'Long-tail keyword identification',
-            'Long-tail keyword identification',
-        ],
-    },
+const resourcesData = [
+  {
+    title: "CONSULTATION",
+    features: [
+      "Trading guidance and Investments",
+      "Strategy Improvement",
+      "Risk management advice",
+      "Beginner assistance",
+      "Mentorship support",
+      "Trading psychology tips",
+    ],
+    price: "$50",
+  },
+  {
+    title: "TRADE WITH ME",
+    features: [
+      "Real time market analysis",
+      "Live trade with high accuracy",
+      "Entry exit plan",
+      "24/7 Support",
+      "Copy my every trades",
+      "Risk management like me",
+      "25% Growth per session",
+    ],
+    price: "Free",
+  },
+  {
+    title: "COURSE",
+    features: [
+      "Basic to advance",
+      "Price action",
+      "SMC / ICT and many proven trading strategies",
+      "Classes: 15 live sessions via Google meet",
+      "Time: Classes will start at 9:00 p.m. (Bangladesh time)",
+      "All the classes will be recorded for your practice and review",
+    ],
+    price: "$900",
+  },
+  {
+    title: "FREE LIVE TRIALS",
+    features: [
+      "Live Trades",
+      "Copy my Trade",
+      "Entry exit",
+      "Aftermarket analysis and review",
+      "Trades management",
+    ],
+    price: "Free",
+  },
 ];
 
-export default function Resources(): React.JSX.Element {
-    return (
-        <section className="flex w-full flex-col items-center px-4">
-            <h2 className="text-center [font-family:'Helvetica_Neue-Bold',Helvetica] text-[80px] leading-[93px] font-bold tracking-[0] whitespace-nowrap text-white">
-                Your Resources
-            </h2>
+export default function Resources() {
+  return (
+    <section className="w-full min-h-screen flex items-center justify-center py-20 px-4">
+      <div className="w-full max-w-[1621px] flex flex-col items-center">
+        <h1 className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-white text-5xl md:text-[80px] text-center tracking-[0] leading-tight mb-10">
+          Your Resources
+        </h1>
 
-            <p className="mt-[43px] text-center [font-family:'Hellix-Regular',Helvetica] text-xl leading-[31px] font-normal tracking-[0] whitespace-nowrap text-white">
-                One of the world&apos;s most popular multi-asset brokers.
-            </p>
+        <p className="[font-family:'Hellix-Regular',Helvetica] font-normal text-white text-lg md:text-xl text-center tracking-[0] leading-[31px] mb-12">
+          One of the world&apos;s most popular multi-asset brokers.
+        </p>
 
-            <div className="mt-12 grid w-full max-w-[1206px] grid-cols-1 gap-[30px] md:grid-cols-3">
-                {resourceCards.map((card, index) => (
-                    <Card
-                        key={index}
-                        className="h-[455px] rounded-[19px] border-[3px] border-solid border-[var(--border-light)] bg-[var(--card-dark)]"
-                    >
-                        <CardContent className="flex h-full flex-col items-center justify-between p-[52px_0]">
-                            <div className="flex w-full flex-col items-center px-8">
-                                <h3 className="text-center [font-family:'Helvetica_Neue-Bold',Helvetica] text-[32px] leading-[38px] font-bold tracking-[0] text-white">
-                                    {card.title}
-                                </h3>
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {resourcesData.map((resource, index) => (
+            <Card
+              key={index}
+              className="bg-[#121212] rounded-[19px] border-[3px] border-solid border-[#ffffff36] flex flex-col"
+            >
+              <CardContent className="flex flex-col p-6 flex-1">
+                <h2 className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-white text-2xl md:text-[32px] tracking-[0] leading-[38px] mb-8 text-center md:text-left">
+                  {resource.title}
+                </h2>
 
-                                <p className="mt-[27px] [font-family:'Helvetica_Neue-Regular',Helvetica] text-base leading-[31px] font-normal tracking-[0] whitespace-nowrap text-white">
-                                    {card.subtitle}
-                                </p>
+                <ul className="flex flex-col gap-4">
+                  {resource.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-center gap-3.5">
+                      <div className="mt-1 min-w-[5px] w-[5px] h-[5px] bg-[#ffffff70] rounded-[2.5px]" />
+                      <span className="[font-family:'Satoshi-Medium',Helvetica] font-medium text-white text-base tracking-[0] leading-7">
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
 
-                                <div className="mt-[74px] flex w-full flex-col gap-[26px]">
-                                    {card.features.map(
-                                        (feature, featureIndex) => (
-                                            <div
-                                                key={featureIndex}
-                                                className="flex items-start gap-3.5"
-                                            >
-                                                <div className="mt-1 h-[5px] w-[5px] flex-shrink-0 rounded-[2.5px] bg-[var(--dot-light)]" />
-                                                <span className="[font-family:'Satoshi-Medium',Helvetica] text-base leading-7 font-medium tracking-[0] text-white">
-                                                    {feature}
-                                                </span>
-                                            </div>
-                                        ),
-                                    )}
-                                </div>
-                            </div>
+                <Button className="w-full mt-10 md:mt-20 h-auto px-[30px] py-[21px] rounded-2xl border border-solid border-[#ffffff61] bg-[linear-gradient(180deg,rgba(237,0,0,1)_0%,rgba(37,1,1,1)_100%)] hover:opacity-90 transition-opacity hover:cursor-pointer">
+                  <span className="[font-family:'Poppins-SemiBold',Helvetica] font-semibold text-white text-base tracking-[0] leading-[26px] whitespace-nowrap">
+                    Get Started Now
+                  </span>
+                </Button>
 
-                            <Button className="mt-10 h-auto w-[194px] rounded-2xl border border-solid border-[var(--border-medium)] px-[30px] py-[21px] [font-family:'Poppins-SemiBold',Helvetica] text-base leading-[26px] font-semibold tracking-[0] text-white hover:opacity-90" style={{ background: `linear-gradient(180deg, var(--gradient-red-start) 0%, var(--gradient-red-end) 100%)` }}>
-                                Get Started Now
-                            </Button>
-                        </CardContent>
-                    </Card>
-                ))}
-            </div>
-        </section>
-    );
+                <div className="flex flex-col gap-5 mt-9">
+                  <span className="[font-family:'Satoshi-Medium',Helvetica] font-medium text-white text-base tracking-[0] leading-7">
+                    Course price
+                  </span>
+                  <span className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-white text-4xl md:text-[56px] tracking-[0] leading-[38px]">
+                    {resource.price}
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
