@@ -1,18 +1,19 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
+import GradientButton from "../GradientButton";
 
 export default function Trade() {
   return (
     <div className="relative flex items-start w-full">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[695px]">
-          <div className="flex flex-col gap-12 max-w-[691px]">
-            <div className="flex flex-col items-start gap-[67px]">
-              <h1 className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-white text-[80px] tracking-[0] leading-[93px]">
-                Make You Trade Profession Successful
-              </h1>
+          <div className="flex flex-col gap-8 max-w-[691px]">
+            <div className="flex flex-col items-start gap-8">
+              <h2 className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold leading-normal text-white text-[60px]">
+                Make You Trade Profession <br/> Successful
+              </h2>
 
-              <p className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-white text-[32px] tracking-[0] leading-[42px]">
+              <p className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold mt-4 text-white text-[32px] tracking-[0] leading-[42px]">
                 Consistency beats intelligence in trading. Show up every day,
                 results will follow."
               </p>
@@ -30,11 +31,9 @@ export default function Trade() {
               professional.
             </p>
 
-            <Button className="w-fit h-auto px-[30px] py-[21px] rounded-2xl border border-solid border-[#ffffff61] bg-[linear-gradient(180deg,rgba(24,129,0,1)_0%,rgba(1,25,3,1)_100%)] hover:opacity-90 transition-opacity">
-              <span className="[font-family:'Poppins-SemiBold',Helvetica] font-semibold text-white text-base tracking-[0] leading-[26px] whitespace-nowrap">
-                Enroll Now
-              </span>
-            </Button>
+            <GradientButton variant="green" href="/trade" className="px-4 py-4">
+              Enroll Now
+            </GradientButton>
           </div>
 
           <div className="flex justify-center lg:justify-end">

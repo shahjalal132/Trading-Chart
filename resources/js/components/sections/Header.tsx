@@ -6,8 +6,16 @@ import {
     NavigationMenuTrigger,
     NavigationMenuContent,
 } from '@/components/ui/navigation-menu';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import React from 'react';
+import {
+    Sheet,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronUp, Menu } from 'lucide-react';
+import React, { useState } from 'react';
 import AppLogo from '../AppLogo';
 import GradientButton from '../GradientButton';
 
@@ -32,11 +40,14 @@ const navigationItems: NavItem[] = [
 ];
 
 export default function Header(): React.JSX.Element {
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
     return (
         <header className="flex w-full h-[95px] items-center justify-between bg-[var(--header-bg)] px-4 md:px-[220px]">
             <AppLogo src="/assets/images/logo.png" />
 
-            <div className="flex items-center gap-[31px]">
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-[31px]">
                 <NavigationMenu viewport={false}>
                     <NavigationMenuList className="flex gap-[31px]">
                         {navigationItems.map((item, index) => (
@@ -85,6 +96,82 @@ export default function Header(): React.JSX.Element {
                         Sign Up
                     </GradientButton>
                 </div>
+            </div>
+
+            {/* Mobile Menu */}
+            <div className="md:hidden">
+                <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                    <SheetTrigger asChild>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-white hover:bg-white/10"
+                        >
+                            <Menu className="h-6 w-6" />
+                        </Button>
+                    </SheetTrigger>
+                    <SheetContent
+                        side="right"
+                        className="bg-[var(--header-bg)] border-[var(--border-medium)] w-[300px]"
+                    >
+                        <SheetHeader>
+                            <SheetTitle className="text-white">Menu</SheetTitle>
+                        </SheetHeader>
+                        <div className="flex flex-col gap-6 mt-8">
+                            {/* Navigation Items */}
+                            <nav className="flex flex-col gap-4">
+                                {navigationItems.map((item, index) => (
+                                    <div key={index}>
+                                        <a
+                                            href={item.href}
+                                            className="flex items-center justify-between [font-family:'DM_Sans-SemiBold',Helvetica] text-base leading-7 font-semibold tracking-[0] text-white transition-opacity hover:opacity-80 py-2"
+                                            onClick={() => setMobileMenuOpen(false)}
+                                        >
+                                            <span>{item.label}</span>
+                                            {item.hasDropdown && (
+                                                <ChevronDown className="h-4 w-4" />
+                                            )}
+                                        </a>
+                                        {item.hasDropdown && (
+                                            <div className="ml-4 mt-2 flex flex-col gap-2">
+                                                {services.map((service, serviceIndex) => (
+                                                    <a
+                                                        key={serviceIndex}
+                                                        href={service.href}
+                                                        className="[font-family:'DM_Sans-SemiBold',Helvetica] text-sm leading-6 font-semibold tracking-[0] text-white/80 transition-opacity hover:opacity-80 py-1"
+                                                        onClick={() =>
+                                                            setMobileMenuOpen(false)
+                                                        }
+                                                    >
+                                                        {service.label}
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </nav>
+
+                            {/* Buttons */}
+                            <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-[var(--border-medium)]">
+                                <GradientButton
+                                    variant="green"
+                                    href="/login"
+                                    className="w-full"
+                                >
+                                    Log In
+                                </GradientButton>
+                                <GradientButton
+                                    variant="red"
+                                    href="/signup"
+                                    className="w-full"
+                                >
+                                    Sign Up
+                                </GradientButton>
+                            </div>
+                        </div>
+                    </SheetContent>
+                </Sheet>
             </div>
         </header>
     );
