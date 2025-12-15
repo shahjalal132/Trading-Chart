@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -7,9 +6,10 @@ import {
     NavigationMenuTrigger,
     NavigationMenuContent,
 } from '@/components/ui/navigation-menu';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import React from 'react';
 import AppLogo from '../AppLogo';
+import GradientButton from '../GradientButton';
 
 interface NavItem {
     label: string;
@@ -43,9 +43,12 @@ export default function Header(): React.JSX.Element {
                             <NavigationMenuItem key={index}>
                                 {item.hasDropdown ? (
                                     <>
-                                        <NavigationMenuTrigger className="flex items-center gap-1 [font-family:'DM_Sans-SemiBold',Helvetica] text-base leading-7 font-semibold tracking-[0] whitespace-nowrap text-white transition-opacity hover:opacity-80 bg-transparent hover:bg-transparent data-[state=open]:bg-transparent focus:bg-transparent focus-visible:ring-0 focus-visible:outline-none p-0 h-auto [&>svg]:hidden [&[data-state=open]>svg:last-child]:rotate-180">
+                                        <NavigationMenuTrigger className="group flex items-center gap-1 [font-family:'DM_Sans-SemiBold',Helvetica] text-base leading-7 font-semibold tracking-[0] whitespace-nowrap text-white transition-opacity hover:opacity-80 bg-transparent hover:bg-transparent data-[state=open]:bg-transparent focus:bg-transparent focus-visible:ring-0 focus-visible:outline-none p-0 h-auto [&>svg:first-of-type]:hidden">
                                             {item.label}
-                                            <ChevronDown className="h-[5px] w-[8.18px] ml-1 transition-transform duration-300" />
+                                            <span className="relative inline-block">
+                                                <ChevronDown className="h-[5px] w-[8.18px] ml-1 transition-all duration-300 group-data-[state=open]:hidden" />
+                                                <ChevronUp className="h-[5px] w-[8.18px] ml-1 transition-all duration-300 absolute inset-0 group-data-[state=closed]:hidden group-data-[state=open]:block" />
+                                            </span>
                                         </NavigationMenuTrigger>
                                         <NavigationMenuContent className="bg-[var(--header-bg)] border-[var(--border-medium)]">
                                             <div className="flex flex-col gap-1 p-2 min-w-[160px]">
@@ -75,22 +78,12 @@ export default function Header(): React.JSX.Element {
                 </NavigationMenu>
 
                 <div className="flex gap-3.5">
-                    <Button
-                        className="h-[43px] w-[102px] rounded-2xl border border-solid border-[var(--border-medium)] [font-family:'Poppins-SemiBold',Helvetica] text-base leading-[26px] font-semibold tracking-[0] text-white transition-opacity hover:opacity-90 hover:cursor-pointer"
-                        style={{
-                            background: `linear-gradient(180deg, var(--gradient-green-start) 0%, var(--gradient-green-end) 100%)`,
-                        }}
-                    >
+                    <GradientButton variant="green" href="/login">
                         Log In
-                    </Button>
-                    <Button
-                        className="h-[43px] w-[116px] rounded-2xl border border-solid border-[var(--border-medium)] [font-family:'Poppins-SemiBold',Helvetica] text-base leading-[26px] font-semibold tracking-[0] text-white transition-opacity hover:opacity-90 hover:cursor-pointer"
-                        style={{
-                            background: `linear-gradient(180deg, var(--gradient-red-start) 0%, var(--gradient-red-end) 100%)`,
-                        }}
-                    >
+                    </GradientButton>
+                    <GradientButton variant="red" href="/signup">
                         Sign Up
-                    </Button>
+                    </GradientButton>
                 </div>
             </div>
         </header>
