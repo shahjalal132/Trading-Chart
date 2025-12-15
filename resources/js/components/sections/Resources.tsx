@@ -37,7 +37,7 @@ const resourceCards = [
 
 export default function Resources(): React.JSX.Element {
     return (
-        <section className="flex w-full flex-col items-center py-16 md:py-24 px-4">
+        <section className="flex w-full flex-col items-center px-4">
             <h2 className="text-center [font-family:'Helvetica_Neue-Bold',Helvetica] text-[80px] leading-[93px] font-bold tracking-[0] whitespace-nowrap text-white">
                 Your Resources
             </h2>

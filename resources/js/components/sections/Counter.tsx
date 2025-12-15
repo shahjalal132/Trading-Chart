@@ -19,17 +19,20 @@ const statsData = [
   },
 ];
 
-export default function Box(): React.JSX.Element {
+export default function Counter(): React.JSX.Element {
   return (
-    <section className="relative flex items-start min-w-[1205px]">
-      <div className="w-[1205px] h-[92px]">
-        <div className="flex justify-center items-start gap-[116px] w-full h-full">
+    <section className="relative flex items-center justify-center py-8 md:py-12">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 lg:gap-[116px] w-full">
           {statsData.map((stat, index) => (
-            <div key={index} className="flex flex-col gap-[30px]">
-              <div className="h-[55px] [font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-[#ed0000] text-[78px] tracking-[0] leading-[93px] whitespace-nowrap">
-                {stat.value}
+            <div
+              key={index}
+              className="flex flex-col items-start text-center"
+            >
+              <div className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-[#ed0000] text-5xl md:text-6xl lg:text-[78px] tracking-[0] leading-tight md:leading-[93px] whitespace-nowrap">
+                {stat.value}+
               </div>
-              <div className="h-[7px] [font-family:'Hellix-SemiBold',Helvetica] font-semibold text-white text-xl tracking-[0] leading-[31px] whitespace-nowrap">
+              <div className="[font-family:'Hellix-SemiBold',Helvetica] font-semibold text-white text-base md:text-lg lg:text-xl tracking-[0] leading-normal md:leading-[31px] whitespace-nowrap">
                 {stat.label}
               </div>
             </div>
