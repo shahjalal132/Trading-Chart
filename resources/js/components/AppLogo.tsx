@@ -4,11 +4,11 @@ import { Link } from '@inertiajs/react';
 export default function AppLogo({
     className,
     href,
-    src,
+    src = '/assets/images/logo.png',
 }: {
     className?: string;
     href?: string;
-    src: string;
+    src?: string;
 }) {
     return (
         <Link
