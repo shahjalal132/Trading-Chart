@@ -39,7 +39,7 @@ export default function Hero(): React.JSX.Element {
                         key={index}
                         variant={button.variant}
                         href={button.href}
-                        className="p-5"
+                        className="px-8 font-semibold py-3"
                     >
                         {button.text}
                     </GradientButton>

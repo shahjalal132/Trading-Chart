@@ -89,10 +89,10 @@ export default function Header(): React.JSX.Element {
                 </NavigationMenu>
 
                 <div className="flex gap-3.5">
-                    <GradientButton variant="green" href="/login" className="p-2 px-4">
+                    <GradientButton variant="green" href="/login" className="p-2 px-6 font-semibold">
                         Log In
                     </GradientButton>
-                    <GradientButton variant="red" href="/signup" className="p-2 px-4">
+                    <GradientButton variant="red" href="/signup" className="p-2 px-6 font-semibold">
                         Sign Up
                     </GradientButton>
                 </div>
