@@ -16,7 +16,7 @@ export default function Home(): React.JSX.Element {
             {/* Hero section background */}
             <div className="relative z-10">
                 <div
-                    className="flex min-h-screen items-center pb-24 bg-cover bg-center bg-no-repeat"
+                    className="flex min-h-screen md:min-h-[70vh] lg:min-h-screen items-center pb-24 bg-fill bg-center bg-no-repeat"
                     style={{
                         backgroundImage: "url('/assets/images/hero-bg.jpg')",
                     }}
@@ -28,7 +28,7 @@ export default function Home(): React.JSX.Element {
             </div>
 
             <div className="relative z-10 flex flex-col">
-                <div className="container mx-auto w-full py-10">
+                <div className="container mx-auto w-full py-30">
                     <Counter />
                 </div>
                 <div className="container mx-auto w-full">

@@ -56,10 +56,10 @@ const socialMediaData: SocialMediaData[] = [
 
 export default function Contact(): React.JSX.Element {
     return (
-        <section className="w-full px-15">
+        <section className="w-full px-8 md:px-15">
             <div className="container mx-auto">
                 <div className="mb-[66px] flex flex-col items-center">
-                    <h2 className="text-center [font-family:'Helvetica_Neue-Bold',Helvetica] text-[80px] leading-[93px] font-bold tracking-[0] whitespace-nowrap text-white">
+                    <h2 className="text-center [font-family:'Helvetica_Neue-Bold',Helvetica] text-4xl md:text-6xl lg:text-[80px] leading-tight md:leading-[70px] lg:leading-[93px] font-bold tracking-[0] text-white whitespace-nowrap">
                         Connect With Us
                     </h2>
 

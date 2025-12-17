@@ -4,7 +4,7 @@ import GradientButton from "../GradientButton";
 
 export default function Marketing() {
   return (
-    <section className="relative w-full px-15">
+    <section className="relative w-full px-8 md:px-15">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-25 items-center">
           <div className="flex justify-center lg:justify-start">

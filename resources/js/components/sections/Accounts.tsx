@@ -85,7 +85,7 @@ export default function Accounts() {
     }, []);
 
     return (
-        <section ref={sectionRef} className="w-full px-4">
+        <section ref={sectionRef} className="w-full px-8 md:px-15">
             <div className="container mx-auto">
                 <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
                     {/* Left Content */}
@@ -118,7 +118,7 @@ export default function Accounts() {
 
                     {/* Right Grid - Trading Accounts */}
                     <div className="flex-1">
-                        <div ref={cardsRef} className="grid grid-cols-2 gap-6">
+                        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {tradingAccounts.map((account, index) => (
                                 <TradingAccountCard
                                     key={index}

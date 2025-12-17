@@ -117,9 +117,9 @@ export default function Counter(): React.JSX.Element {
     return (
         <section
             ref={sectionRef}
-            className="relative flex items-center justify-center py-8 md:py-12"
+            className="relative flex items-center justify-center"
         >
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-8 lg:px-4">
                 <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 lg:gap-[116px] w-full">
                     {statsData.map((stat, index) => (
                         <div
@@ -130,7 +130,7 @@ export default function Counter(): React.JSX.Element {
                                 ref={(el) => {
                                     counterRefs.current[index] = el;
                                 }}
-                                className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-[#ed0000] text-5xl md:text-6xl lg:text-[78px] tracking-[0] leading-tight md:leading-[93px] whitespace-nowrap"
+                                className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-[#ed0000] text-5xl md:text-5xl lg:text-[78px] tracking-[0] leading-tight md:leading-[93px] whitespace-nowrap"
                             >
                                 0
                             </div>

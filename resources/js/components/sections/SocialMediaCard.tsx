@@ -87,7 +87,7 @@ export default function SocialMediaCard({
                     </div>
 
                     <div className="mt-1 flex flex-col gap-2">
-                        <h3 className="[font-family:'Helvetica_Neue-Bold',Helvetica] text-[32px] leading-[38px] font-bold tracking-[0] whitespace-nowrap text-white">
+                        <h3 className="[font-family:'Helvetica_Neue-Bold',Helvetica] text-xl md:text-2xl lg:text-[32px] leading-6 md:leading-7 lg:leading-[38px] font-bold tracking-[0] whitespace-nowrap text-white">
                             {platform.name}
                         </h3>
 
