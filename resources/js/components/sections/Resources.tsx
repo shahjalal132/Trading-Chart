@@ -61,7 +61,7 @@ const resourcesData: ResourcesData[] = [
 
 export default function Resources() {
   return (
-    <section className="w-full min-h-screen flex items-center justify-center py-20 px-4">
+    <section className="w-full min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-[1621px] flex flex-col items-center">
         <h1 className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-white text-5xl md:text-[80px] text-center tracking-[0] leading-tight mb-10">
           Your Resources
