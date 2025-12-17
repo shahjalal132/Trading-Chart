@@ -54,7 +54,7 @@ export default function Home(): React.JSX.Element {
                 <div className="container mx-auto py-30 w-full">
                     <Video/>
                 </div>
-                <div className="container mx-auto w-full">
+                <div className="container mx-auto pb-20 w-full">
                     <Community/>
                 </div>
                 <Footer />
