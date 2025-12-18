@@ -179,35 +179,35 @@
       "text": "I would recommend practitioners at this center to everyone! They are great to work with & are excellent!",
       "author": "Ovi Rashed",
       "role": "Student Name",
-      "avatar": "/assets/images/avatar1.jpg"
+      "avatar": "/assets/images/person.png"
     },
     {
       "rating": 5,
       "text": "Amazing course! The instructor was knowledgeable and the content was well-structured. Highly recommended!",
       "author": "Sarah Johnson",
       "role": "Student Name",
-      "avatar": "/assets/images/avatar2.jpg"
+      "avatar": "/assets/images/person.png"
     },
     {
       "rating": 4,
       "text": "Great learning experience. The course materials were comprehensive and easy to follow.",
       "author": "Michael Chen",
       "role": "Student Name",
-      "avatar": "/assets/images/avatar3.jpg"
+      "avatar": "/assets/images/person.png"
     },
     {
       "rating": 5,
       "text": "This course exceeded my expectations. The practical examples and real-world applications made learning engaging and effective.",
       "author": "Emily Davis",
       "role": "Professional Trader",
-      "avatar": "/assets/images/avatar4.jpg"
+      "avatar": "/assets/images/person.png"
     },
     {
       "rating": 5,
       "text": "Outstanding instruction and support throughout the course. I've seen significant improvement in my trading skills.",
       "author": "James Wilson",
       "role": "Beginner Trader",
-      "avatar": "/assets/images/avatar5.jpg"
+      "avatar": "/assets/images/person.png"
     }
   ]
 }

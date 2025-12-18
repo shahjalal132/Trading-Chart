@@ -23,7 +23,6 @@ import {
 import React, { useState } from 'react';
 
 export default function CourseDetailsInfo(): React.JSX.Element {
-    const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
     const [activeTab, setActiveTab] = useState('course-info');
     const [expandedModules, setExpandedModules] = useState<
         Record<number, boolean>
@@ -39,16 +38,6 @@ export default function CourseDetailsInfo(): React.JSX.Element {
         curriculum,
         instructor,
     } = courseData;
-
-    const nextReview = () => {
-        setCurrentReviewIndex((prev) => (prev + 1) % reviews.length);
-    };
-
-    const prevReview = () => {
-        setCurrentReviewIndex(
-            (prev) => (prev - 1 + reviews.length) % reviews.length,
-        );
-    };
 
     const toggleModule = (moduleId: number) => {
         setExpandedModules((prev) => ({
@@ -343,17 +332,18 @@ export default function CourseDetailsInfo(): React.JSX.Element {
                         {/* Course Description Section */}
                         <div className="rounded-2xl bg-[#222428] p-8">
                             {/* Review Carousel */}
-                            <Carousel className="relative mt-5 w-full rounded-lg">
-                                <CarouselContent className="-ml-0">
+                            <Carousel
+                                className="relative mt-5 w-full rounded-lg"
+                                autoplay={true}
+                                autoplayInterval={5000}
+                                opts={{
+                                    align: "start",
+                                    loop: true,
+                                }}
+                            >
+                                <CarouselContent>
                                     {reviews.map((review, index) => (
-                                        <CarouselItem
-                                            key={index}
-                                            className={`pl-0 ${
-                                                index === currentReviewIndex
-                                                    ? 'block'
-                                                    : 'hidden'
-                                            }`}
-                                        >
+                                        <CarouselItem key={index}>
                                             <div className="flex flex-col items-center">
                                                 <div className="mb-4 flex justify-center gap-1">
                                                     {[1, 2, 3, 4, 5].map(
@@ -367,11 +357,11 @@ export default function CourseDetailsInfo(): React.JSX.Element {
                                                 </div>
 
                                                 <p className="mx-auto mb-6 max-w-2xl text-center [font-family:'DM_Sans-SemiBold',Helvetica] text-[28px] leading-tight font-semibold tracking-[0]">
-                                                    &quot;{review.text}&quot;
+                                                    {review.text}
                                                 </p>
 
                                                 <div className="flex items-center justify-center gap-3">
-                                                    <div className="h-12 w-12 rounded-full bg-[#222428]"></div>
+                                                    <img src={review.avatar} alt={review.author} className="h-14 w-14 rounded-full object-cover border-2 border-white" />
                                                     <div>
                                                         <div className="[font-family:'DM_Sans-Medium',Helvetica] text-base leading-7 font-medium tracking-[0]">
                                                             {review.author}
@@ -385,8 +375,8 @@ export default function CourseDetailsInfo(): React.JSX.Element {
                                         </CarouselItem>
                                     ))}
                                 </CarouselContent>
-                                <CarouselPrevious onClick={prevReview} />
-                                <CarouselNext onClick={nextReview} />
+                                <CarouselPrevious />
+                                <CarouselNext />
                             </Carousel>
                         </div>
                     </div>
@@ -516,7 +506,7 @@ export default function CourseDetailsInfo(): React.JSX.Element {
                             </h2>
 
                             {/* Tabs */}
-                            <div className="flex flex-col gap-3 md:flex-wrap md:gap-5 rounded-4xl bg-[#222428] p-3 lg:max-w-[81%]">
+                            <div className="flex sm:flex-col md:flex-row gap-3 md:flex-wrap md:gap-5 rounded-4xl bg-[#222428] p-3 lg:max-w-[81%]">
                                 {tabs.map((tab) => (
                                     <button
                                         key={tab.id}
