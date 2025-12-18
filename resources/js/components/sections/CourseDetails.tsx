@@ -178,17 +178,17 @@ export default function CourseDetailsInfo(): React.JSX.Element {
 
             case 'instructor':
                 return (
-                    <div className="mt-8 rounded-2xl bg-[#222428] p-8">
+                    <div className="mt-8 ">
                         <h2 className="mb-6 text-3xl font-bold">
                             Course Instructors
                         </h2>
-                        <div className="rounded-lg bg-gray-800 p-8">
+                        <div className="rounded-3xl bg-[#222428] p-8">
                             <div className="flex flex-col gap-6 md:flex-row">
                                 <div className="flex-shrink-0">
                                     <div className="h-32 w-32 rounded-full bg-gray-600"></div>
                                 </div>
                                 <div className="flex-1">
-                                    <div className="mb-1 text-sm text-red-500">
+                                    <div className="mb-1 font-semibold text-lg text-red-500">
                                         {instructor.role}
                                     </div>
                                     <h3 className="mb-4 text-2xl font-bold">
