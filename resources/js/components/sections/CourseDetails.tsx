@@ -11,6 +11,7 @@ import {
     ChevronDown,
     ChevronLeft,
     ChevronRight,
+    CircleCheck,
     Clock,
     Lock,
     MessageCircle,
@@ -20,12 +21,13 @@ import {
     Youtube,
     Instagram,
 } from 'lucide-react';
+import { Link } from '@inertiajs/react';
 import React, { useState } from 'react';
 
 export default function CourseDetailsInfo(): React.JSX.Element {
     const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
     const [activeTab, setActiveTab] = useState('course-info');
-    const [expandedModules, setExpandedModules] = useState<Record<number, boolean>>({});
+    const [expandedModules, setExpandedModules] = useState<Record<number, boolean>>({ 1: true });
 
     const {
         course,
@@ -59,7 +61,7 @@ export default function CourseDetailsInfo(): React.JSX.Element {
         switch (activeTab) {
             case 'course-info':
                 return (
-                    <div className="mt-8 space-y-6 rounded-2xl bg-[#222428] p-8">
+                    <div className="mt-8 space-y-6 rounded-2xl">
                         <div className="space-y-4 leading-relaxed text-gray-300">
                             {courseInfoContent.description.map((para, index) => (
                                 <p key={index}>{para}</p>
@@ -67,21 +69,19 @@ export default function CourseDetailsInfo(): React.JSX.Element {
                         </div>
 
                         <div>
-                            <h3 className="mb-6 text-2xl font-bold">
-                                What you&apos;ll learn?
+                            <h3 className="mb-6 text-4xl font-bold">
+                                What you'll learn?
                             </h3>
                             <p className="mb-6 text-gray-300">
                                 {courseInfoContent.whatYouLearn.intro}
                             </p>
 
-                            <div className="space-y-4">
+                            <div className="space-y-6">
                                 {courseInfoContent.whatYouLearn.learningPoints.map(
                                     (point, index) => (
                                         <div key={index} className="flex gap-4">
                                             <div className="mt-1 flex-shrink-0">
-                                                <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-yellow-400">
-                                                    <div className="h-2 w-2 rounded-full bg-yellow-400"></div>
-                                                </div>
+                                                <CircleCheck className="h-6 w-6 text-yellow-400" />
                                             </div>
                                             <div>
                                                 <h4 className="mb-1 font-semibold text-white">
@@ -101,19 +101,23 @@ export default function CourseDetailsInfo(): React.JSX.Element {
 
             case 'curriculum':
                 return (
-                    <div className="mt-8 rounded-2xl bg-[#222428] p-8">
+                    <div className="mt-8 rounded-2xl">
                         <h2 className="mb-6 text-3xl font-bold">
                             Course Curriculum
                         </h2>
-                        <div className="space-y-4">
+                        <div className="space-y-3">
                             {curriculum.modules.map((module) => (
                                 <div
                                     key={module.id}
-                                    className="overflow-hidden rounded-lg bg-gray-800"
+                                    className={`overflow-hidden rounded-md ${
+                                        expandedModules[module.id]
+                                            ? 'bg-[#222428]'
+                                            : 'border border-[#383a3e] bg-transparent'
+                                    }`}
                                 >
                                     <button
                                         onClick={() => toggleModule(module.id)}
-                                        className="flex w-full items-center justify-between p-5 transition-colors hover:bg-gray-750"
+                                        className="flex w-full items-center justify-between p-5 transition-colors hover:bg-gray-750 hover:cursor-pointer"
                                     >
                                         <span className="text-left font-medium">
                                             {module.title}
@@ -134,15 +138,22 @@ export default function CourseDetailsInfo(): React.JSX.Element {
                                                     (lesson, idx) => (
                                                         <div
                                                             key={idx}
-                                                            className="flex items-center justify-between border-b border-gray-700 px-5 py-4 last:border-b-0"
+                                                            className={`flex items-center justify-between px-5 py-4 ${
+                                                                idx === 0
+                                                                    ? 'border-b border-dotted border-gray-700'
+                                                                    : 'border-b border-gray-700 last:border-b-0'
+                                                            }`}
                                                         >
                                                             <div className="flex items-center gap-3">
                                                                 <span className="text-gray-400">
                                                                     •
                                                                 </span>
-                                                                <span className="text-gray-300">
+                                                                <Link
+                                                                    href="#"
+                                                                    className="cursor-pointer text-gray-300 transition-colors hover:text-yellow-400"
+                                                                >
                                                                     {lesson.title}
-                                                                </span>
+                                                                </Link>
                                                             </div>
                                                             <div className="flex items-center gap-3 text-gray-400">
                                                                 {lesson.locked && (
@@ -490,7 +501,7 @@ export default function CourseDetailsInfo(): React.JSX.Element {
                             </h2>
 
                             {/* Tabs */}
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-5 lg:max-w-[81%] bg-[#222428] p-3 rounded-4xl">
                                 {tabs.map((tab) => (
                                     <button
                                         key={tab.id}
@@ -500,7 +511,7 @@ export default function CourseDetailsInfo(): React.JSX.Element {
                                                 ? tab.id === 'curriculum'
                                                     ? 'bg-yellow-400 text-gray-900'
                                                     : 'bg-red-600 text-white'
-                                                : 'bg-[#222428] text-gray-300 hover:bg-gray-700'
+                                                : 'bg-[#222428] hover:cursor-pointer hover:bg-gray-700'
                                         }`}
                                     >
                                         {tab.label}
