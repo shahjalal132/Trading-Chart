@@ -106,7 +106,7 @@ export default function SocialMediaCard({
                 )}
 
                 <Button
-                    className="h-auto max-w-[200px] rounded-2xl border border-solid border-[var(--border-medium)] py-2 [font-family:'Poppins-SemiBold',Helvetica] text-[15px] leading-[26px] font-semibold tracking-[0] text-white hover:opacity-90"
+                    className="h-auto max-w-[200px] rounded-2xl border border-solid border-[var(--border-medium)] py-2 [font-family:'Poppins-SemiBold',Helvetica] text-[15px] leading-[26px] font-semibold tracking-[0] hover:cursor-pointer text-white hover:opacity-90"
                     style={{
                         background: `linear-gradient(180deg, var(--gradient-red-start) 0%, var(--gradient-red-end) 100%)`,
                     }}
