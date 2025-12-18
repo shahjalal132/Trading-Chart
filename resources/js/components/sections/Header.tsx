@@ -143,7 +143,7 @@ export default function Header(): React.JSX.Element {
                                         >
                                             <span>{item.label}</span>
                                             {item.hasDropdown && (
-                                                <ChevronDown className="h-4 w-4" />
+                                                <ChevronDown  />
                                             )}
                                         </a>
                                         {item.hasDropdown && (

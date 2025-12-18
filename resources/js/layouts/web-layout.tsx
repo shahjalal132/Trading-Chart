@@ -1,5 +1,6 @@
 import Footer from '@/components/sections/Footer';
 import Header from '@/components/sections/Header';
+import ScrollToTop from '@/components/ScrollToTop';
 import TradingBackground from '@/components/TradingBackground';
 import { type ReactNode } from 'react';
 
@@ -14,6 +15,7 @@ export default function WebLayout({ children }: WebLayoutProps) {
             <Header />
             <main className="relative z-10 flex flex-col">{children}</main>
             <Footer />
+            <ScrollToTop />
         </div>
     );
 }
