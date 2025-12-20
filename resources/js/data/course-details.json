@@ -209,6 +209,68 @@
       "role": "Beginner Trader",
       "avatar": "/assets/images/person.png"
     }
+  ],
+  "faqs": [
+    {
+      "id": 1,
+      "question": "What is this trading course about?",
+      "answer": "This comprehensive trading course covers everything from basic market fundamentals to advanced trading strategies, including technical analysis, risk management, and live market practice."
+    },
+    {
+      "id": 2,
+      "question": "Do I need any prior experience to join?",
+      "answer": "No prior experience is required. This course is designed for complete beginners as well as intermediate traders looking to improve their skills."
+    },
+    {
+      "id": 3,
+      "question": "How long will it take to complete the course?",
+      "answer": "The course runs from February to October 2025. However, all recorded sessions will be available for lifetime access, allowing you to learn at your own pace."
+    },
+    {
+      "id": 4,
+      "question": "Is this course suitable for full-time employees?",
+      "answer": "Yes, absolutely! The course is designed with flexible scheduling in mind. All live sessions are recorded, so you can watch them at your convenience."
+    },
+    {
+      "id": 5,
+      "question": "Will I get lifetime access to the course?",
+      "answer": "Yes, you will receive lifetime access to all course materials, recorded sessions, and future updates at no additional cost."
+    },
+    {
+      "id": 6,
+      "question": "Do you provide live classes or only recorded lessons?",
+      "answer": "Yes. We provide both. Recorded lessons teach the core concepts, and live sessions help you practice in real time."
+    },
+    {
+      "id": 7,
+      "question": "Does the course include real market examples?",
+      "answer": "Yes, the course includes extensive real market examples with live chart analysis in every session to help you understand practical applications."
+    },
+    {
+      "id": 8,
+      "question": "Will you teach risk management?",
+      "answer": "Yes, risk management and money management are core components of this course, ensuring you trade safely and protect your capital."
+    },
+    {
+      "id": 9,
+      "question": "What tools or apps do I need for this course?",
+      "answer": "You'll need a trading platform (we'll guide you on setup), and basic charting tools. All custom indicators and materials will be provided."
+    },
+    {
+      "id": 10,
+      "question": "Do you provide personal guidance?",
+      "answer": "Yes, you'll receive personal guidance through live sessions, Q&A support, and community access where you can ask questions directly."
+    },
+    {
+      "id": 11,
+      "question": "What if I do not understand a lesson?",
+      "answer": "You can rewatch recorded lessons anytime, ask questions during live sessions, or reach out through our dedicated support channels for clarification."
+    },
+    {
+      "id": 12,
+      "question": "Do you provide trading signals?",
+      "answer": "Yes. We provide both. Recorded lessons teach the core concepts, and live sessions help you practice in real time."
+    }
   ]
 }
 
