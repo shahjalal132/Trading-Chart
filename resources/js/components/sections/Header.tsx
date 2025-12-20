@@ -95,14 +95,14 @@ export default function Header(): React.JSX.Element {
                     <GradientButton
                         variant="green"
                         href="/login"
-                        className="p-2 px-6 font-semibold"
+                        className="p-2 px-6 font-semibold "
                     >
                         Log In
                     </GradientButton>
                     <GradientButton
                         variant="red"
                         href="/register"
-                        className="p-2 px-6 font-semibold"
+                        className="p-2 px-6 font-semibold "
                     >
                         Sign Up
                     </GradientButton>

@@ -61,7 +61,7 @@ export default function GradientButton({
             type="button"
             onClick={handleClick}
             className={cn(
-                'inline-flex items-center justify-center rounded-2xl border border-[var(--border-medium)] text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg',
+                'inline-flex items-center justify-center rounded-2xl border border-[var(--border-medium)] text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg hover:cursor-pointer',
                 className
             )}
             style={{

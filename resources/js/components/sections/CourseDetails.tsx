@@ -481,7 +481,7 @@ export default function CourseDetailsInfo(): React.JSX.Element {
                                 </span>
                             </div>
 
-                            <button className="w-full rounded-3xl bg-red-600 py-3 [font-family:'DM_Sans-SemiBold',Helvetica] text-lg leading-7 font-semibold tracking-[0] text-white transition-colors hover:bg-red-700">
+                            <button className="w-full rounded-3xl bg-red-600 py-3 [font-family:'DM_Sans-SemiBold',Helvetica] text-lg leading-7 font-semibold tracking-[0] text-white transition-colors hover:bg-red-700 hover:cursor-pointer">
                                 Add to Cart
                             </button>
                         </div>
