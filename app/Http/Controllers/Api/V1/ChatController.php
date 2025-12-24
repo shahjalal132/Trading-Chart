@@ -20,7 +20,7 @@ class ChatController extends Controller
         ]);
 
         $apiKey = config('services.openai.api_key');
-        
+
         if (!$apiKey) {
             return response()->json([
                 'message' => 'ChatGPT API key is not configured. Please set OPENAI_API_KEY in your .env file.',
@@ -30,7 +30,7 @@ class ChatController extends Controller
         try {
             // Prepare conversation history
             $messages = [];
-            
+
             // Add system message
             $messages[] = [
                 'role' => 'system',
@@ -55,20 +55,24 @@ class ChatController extends Controller
                 'content' => $request->message,
             ];
 
-            // Make request to OpenAI API
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $apiKey,
-                'Content-Type' => 'application/json',
-            ])->timeout(30)->post('https://api.openai.com/v1/chat/completions', [
+            $url = config('services.openai.url');
+
+            $data = [
                 'model' => config('services.openai.model', 'gpt-3.5-turbo'),
                 'messages' => $messages,
                 'max_tokens' => 500,
                 'temperature' => 0.7,
-            ]);
+            ];
+
+            // Make request to OpenAI API
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $apiKey,
+                'Content-Type' => 'application/json',
+            ])->timeout(60)->post($url, $data);
 
             if ($response->successful()) {
                 $data = $response->json();
-                
+
                 $assistantMessage = $data['choices'][0]['message']['content'] ?? 'Sorry, I could not process your request.';
 
                 return response()->json([
@@ -84,7 +88,6 @@ class ChatController extends Controller
             return response()->json([
                 'message' => 'Sorry, I encountered an error processing your request. Please try again.',
             ], 500);
-
         } catch (\Exception $e) {
             Log::error('Chat Error', [
                 'message' => $e->getMessage(),
@@ -97,4 +100,3 @@ class ChatController extends Controller
         }
     }
 }
-
