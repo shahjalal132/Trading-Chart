@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Play, Pause } from 'lucide-react';
 
-const YOUTUBE_VIDEO_ID = 'RSF8KL3xaIk';
+const YOUTUBE_VIDEO_ID = 'lxqunjNXSoY';
 const YOUTUBE_WATCH_URL = `https://www.youtube.com/watch?v=${YOUTUBE_VIDEO_ID}`;
 const YOUTUBE_EMBED_URL = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&enablejsapi=1`;
 
