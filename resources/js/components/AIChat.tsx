@@ -35,7 +35,11 @@ export default function AIChat() {
 
     useEffect(() => {
         if (isOpen && inputRef.current) {
-            inputRef.current.focus();
+            // Use setTimeout to ensure focus happens after the animation completes
+            const timeoutId = setTimeout(() => {
+                inputRef.current?.focus();
+            }, 100);
+            return () => clearTimeout(timeoutId);
         }
     }, [isOpen]);
 

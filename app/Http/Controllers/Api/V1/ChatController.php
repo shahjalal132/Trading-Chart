@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Mcp\Tools\QueryDatabaseTool;
+use App\Models\User;
+use App\Notifications\AdminChatNotification;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Laravel\Mcp\Request as McpRequest;
 
 class ChatController extends Controller
 {
     /**
-     * Handle chat requests and forward to ChatGPT API.
+     * Handle chat requests using MCP server.
      */
     public function chat(Request $request)
     {
@@ -19,75 +22,61 @@ class ChatController extends Controller
             'conversation_history' => 'nullable|array',
         ]);
 
-        $apiKey = config('services.openai.api_key');
-
-        if (!$apiKey) {
-            return response()->json([
-                'message' => 'ChatGPT API key is not configured. Please set OPENAI_API_KEY in your .env file.',
-            ], 500);
-        }
-
         try {
             // Prepare conversation history
-            $messages = [];
+            $conversationHistory = $request->input('conversation_history', []);
 
-            // Add system message
-            $messages[] = [
-                'role' => 'system',
-                'content' => 'You are a helpful AI assistant for a trading and course platform. Be friendly, concise, and helpful.',
-            ];
+            // Create MCP request and call the tool directly
+            $mcpRequest = new McpRequest(['query' => $request->message]);
+            $tool = new QueryDatabaseTool();
+            $response = $tool->handle($mcpRequest);
 
-            // Add conversation history if provided
-            if ($request->has('conversation_history') && is_array($request->conversation_history)) {
-                foreach ($request->conversation_history as $history) {
-                    if (isset($history['role']) && isset($history['content'])) {
-                        $messages[] = [
-                            'role' => $history['role'],
-                            'content' => $history['content'],
-                        ];
+            $answer = '';
+            $answerFound = false;
+
+            // Get the content from the response
+            $content = $response->content();
+            
+            // The content is a Text object, convert it to string
+            if ($content instanceof \Laravel\Mcp\Server\Content\Text) {
+                $answer = (string) $content;
+                $answerFound = !empty(trim($answer));
+            }
+
+            // If answer not found, send notification to admin
+            if (!$answerFound) {
+                $answer = "Sorry we couldn't find Contact with a consultant";
+                
+                // Send notification to admin users
+                $adminUsers = User::where('role', 'admin')->get();
+                
+                // Prepare chat history for notification
+                $chatHistory = array_merge($conversationHistory, [
+                    [
+                        'role' => 'user',
+                        'content' => $request->message,
+                    ],
+                    [
+                        'role' => 'assistant',
+                        'content' => $answer,
+                    ],
+                ]);
+
+                foreach ($adminUsers as $admin) {
+                    try {
+                        $admin->notify(new AdminChatNotification($chatHistory));
+                    } catch (\Exception $e) {
+                        Log::error('Failed to send admin notification', [
+                            'admin_id' => $admin->id,
+                            'error' => $e->getMessage(),
+                        ]);
                     }
                 }
             }
 
-            // Add current user message
-            $messages[] = [
-                'role' => 'user',
-                'content' => $request->message,
-            ];
-
-            $url = config('services.openai.url');
-
-            $data = [
-                'model' => config('services.openai.model', 'gpt-3.5-turbo'),
-                'messages' => $messages,
-                'max_tokens' => 500,
-                'temperature' => 0.7,
-            ];
-
-            // Make request to OpenAI API
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $apiKey,
-                'Content-Type' => 'application/json',
-            ])->timeout(60)->post($url, $data);
-
-            if ($response->successful()) {
-                $data = $response->json();
-
-                $assistantMessage = $data['choices'][0]['message']['content'] ?? 'Sorry, I could not process your request.';
-
-                return response()->json([
-                    'message' => trim($assistantMessage),
-                ]);
-            }
-
-            Log::error('OpenAI API Error', [
-                'status' => $response->status(),
-                'body' => $response->body(),
-            ]);
-
             return response()->json([
-                'message' => 'Sorry, I encountered an error processing your request. Please try again.',
-            ], 500);
+                'message' => $answer,
+            ]);
         } catch (\Exception $e) {
             Log::error('Chat Error', [
                 'message' => $e->getMessage(),
