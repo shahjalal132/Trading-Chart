@@ -3,17 +3,23 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Mcp\Tools\QueryDatabaseTool;
 use App\Models\User;
 use App\Notifications\AdminChatNotification;
+use App\Services\AIChatService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Laravel\Mcp\Request as McpRequest;
 
 class ChatController extends Controller
 {
+    protected AIChatService $aiService;
+
+    public function __construct(AIChatService $aiService)
+    {
+        $this->aiService = $aiService;
+    }
+
     /**
-     * Handle chat requests using MCP server.
+     * Handle chat requests using AI analysis and database queries.
      */
     public function chat(Request $request)
     {
@@ -23,29 +29,69 @@ class ChatController extends Controller
         ]);
 
         try {
-            // Prepare conversation history
             $conversationHistory = $request->input('conversation_history', []);
+            $userMessage = $request->input('message');
 
-            // Create MCP request and call the tool directly
-            $mcpRequest = new McpRequest(['query' => $request->message]);
-            $tool = new QueryDatabaseTool();
-            $response = $tool->handle($mcpRequest);
+            // Step 1: Analyze the query to understand user intent
+            $analysis = $this->aiService->analyzeQuery($userMessage, $conversationHistory);
 
             $answer = '';
             $answerFound = false;
 
-            // Get the content from the response
-            $content = $response->content();
-            
-            // The content is a Text object, convert it to string
-            if ($content instanceof \Laravel\Mcp\Server\Content\Text) {
-                $answer = (string) $content;
-                $answerFound = !empty(trim($answer));
+            // Step 2: Query database if needed
+            if ($analysis['needs_database'] ?? false) {
+                $databaseResult = $this->aiService->queryDatabase($analysis);
+                
+                if ($databaseResult) {
+                    // Step 3: Format the response using AI for natural language
+                    $answer = $this->aiService->formatResponse($userMessage, $databaseResult, $conversationHistory);
+                    $answerFound = !empty(trim($answer));
+                }
+            } else {
+                // For general queries without database needs, use AI directly
+                $apiKey = config('services.deepinfra.api_key');
+                if ($apiKey) {
+                    try {
+                        $messages = [
+                            ['role' => 'system', 'content' => 'You are a helpful AI assistant for a trading course platform. Be friendly and concise.'],
+                        ];
+
+                        if (!empty($conversationHistory)) {
+                            foreach (array_slice($conversationHistory, -5) as $history) {
+                                if (isset($history['role']) && isset($history['content'])) {
+                                    $messages[] = [
+                                        'role' => $history['role'],
+                                        'content' => $history['content'],
+                                    ];
+                                }
+                            }
+                        }
+
+                        $messages[] = ['role' => 'user', 'content' => $userMessage];
+
+                        $response = \Illuminate\Support\Facades\Http::withHeaders([
+                            'Authorization' => 'Bearer ' . $apiKey,
+                            'Content-Type' => 'application/json',
+                        ])->timeout(30)->post(config('services.deepinfra.url'), [
+                            'model' => config('services.deepinfra.model', 'meta-llama/Meta-Llama-3.1-8B-Instruct'),
+                            'messages' => $messages,
+                            'temperature' => 0.7,
+                            'max_tokens' => 300,
+                        ]);
+
+                        if ($response->successful()) {
+                            $answer = trim($response->json('choices.0.message.content', ''));
+                            $answerFound = !empty($answer);
+                        }
+                    } catch (\Exception $e) {
+                        Log::error('AI Direct Response Error', ['message' => $e->getMessage()]);
+                    }
+                }
             }
 
-            // If answer not found, send notification to admin
+            // Step 4: If answer not found, send notification to admin
             if (!$answerFound) {
-                $answer = "Information not found. For help, please contact support.";
+                $answer = "Sorry we couldn't find Contact with a consultant";
                 
                 // Send notification to admin users
                 $adminUsers = User::where('role', 'admin')->get();
@@ -54,7 +100,7 @@ class ChatController extends Controller
                 $chatHistory = array_merge($conversationHistory, [
                     [
                         'role' => 'user',
-                        'content' => $request->message,
+                        'content' => $userMessage,
                     ],
                     [
                         'role' => 'assistant',

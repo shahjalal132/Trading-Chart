@@ -41,4 +41,10 @@ return [
         'url' => env('OPENAI_URL', 'https://api.openai.com/v1/chat/completions'),
     ],
 
+    'deepinfra' => [
+        'api_key' => env('DEEPINFRA_API_KEY'),
+        'model' => env('DEEPINFRA_MODEL', 'meta-llama/Meta-Llama-3.1-8B-Instruct'),
+        'url' => env('DEEPINFRA_URL', 'https://api.deepinfra.com/v1/openai/chat/completions'),
+    ],
+
 ];
