@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class CourseController extends Controller
@@ -39,7 +41,11 @@ class CourseController extends Controller
 
     public function create()
     {
-        return Inertia::render('Admin/Courses/Create');
+        $users = User::select('id', 'name', 'email')->orderBy('name')->get();
+        
+        return Inertia::render('admin/courses/create', [
+            'users' => $users,
+        ]);
     }
 
     public function store(Request $request)
@@ -50,22 +56,39 @@ class CourseController extends Controller
             'description' => 'nullable|string',
             'author_id' => 'required|exists:users,id',
             'price' => 'required|numeric|min:0',
-            // Add more validation rules as needed
+            'thumbnail' => 'nullable|image|max:2048',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'start_time' => 'nullable|date_format:H:i',
+            'end_time' => 'nullable|date_format:H:i',
+            'total_seats' => 'nullable|integer|min:0',
+            'published_at' => 'nullable|date',
         ]);
 
+        if ($request->hasFile('thumbnail')) {
+            $validated['thumbnail_url'] = $request->file('thumbnail')->store('courses', 'public');
+        }
+
         Course::create($validated);
-        return redirect()->route('admin.courses.index');
+        
+        return redirect()->route('admin.courses.index')
+            ->with('success', 'Course created successfully.');
     }
 
     public function show(Course $course)
     {
         $course->load(['author', 'modules.lessons', 'learningObjectives', 'reviews', 'faqs']);
-        return Inertia::render('Admin/Courses/Show', ['course' => $course]);
+        return Inertia::render('admin/courses/show', ['course' => $course]);
     }
 
     public function edit(Course $course)
     {
-        return Inertia::render('Admin/Courses/Edit', ['course' => $course]);
+        $users = User::select('id', 'name', 'email')->orderBy('name')->get();
+        
+        return Inertia::render('admin/courses/edit', [
+            'course' => $course,
+            'users' => $users,
+        ]);
     }
 
     public function update(Request $request, Course $course)
@@ -76,10 +99,27 @@ class CourseController extends Controller
             'description' => 'nullable|string',
             'author_id' => 'required|exists:users,id',
             'price' => 'required|numeric|min:0',
+            'thumbnail' => 'nullable|image|max:2048',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'start_time' => 'nullable|date_format:H:i',
+            'end_time' => 'nullable|date_format:H:i',
+            'total_seats' => 'nullable|integer|min:0',
+            'published_at' => 'nullable|date',
         ]);
 
+        if ($request->hasFile('thumbnail')) {
+            // Delete old thumbnail if exists
+            if ($course->thumbnail_url) {
+                Storage::disk('public')->delete($course->thumbnail_url);
+            }
+            $validated['thumbnail_url'] = $request->file('thumbnail')->store('courses', 'public');
+        }
+
         $course->update($validated);
-        return redirect()->route('admin.courses.index');
+        
+        return redirect()->route('admin.courses.index')
+            ->with('success', 'Course updated successfully.');
     }
 
     public function destroy(Course $course)

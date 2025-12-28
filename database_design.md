@@ -5,6 +5,7 @@ This document outlines the database schema for the course application. The desig
 ## Table of Contents
 
 - [users](#users)
+- [instructors](#instructors)
 - [courses](#courses)
 - [learning_objectives](#learning_objectives)
 - [instructor_social_links](#instructor_social_links)
@@ -26,7 +27,7 @@ This document outlines the database schema for the course application. The desig
 
 ### `users`
 
-This table stores user information. It's based on the default Laravel `users` table, with additions for roles, instructor bios, and avatars.
+This table stores user information. It's based on the default Laravel `users` table, with additions for roles and avatars.
 
 | Column Name         | Data Type                               | Constraints                        | Description                               |
 | ------------------- | --------------------------------------- | ---------------------------------- | ----------------------------------------- |
@@ -36,7 +37,6 @@ This table stores user information. It's based on the default Laravel `users` ta
 | `email_verified_at` | `timestamp`                             | `NULLABLE`                         | Timestamp of email verification.          |
 | `password`          | `varchar(255)`                          | `NOT NULL`                         | Hashed password for the user.             |
 | `role`              | `enum('admin', 'instructor', 'student')`| `NOT NULL`, `DEFAULT 'student'`    | Role of the user within the application.  |
-| `bio`               | `text`                                  | `NULLABLE`                         | Biography for instructors.                |
 | `avatar_url`        | `varchar(255)`                          | `NULLABLE`                         | URL for the user's profile picture.       |
 | `remember_token`    | `varchar(100)`                          | `NULLABLE`                         | For "remember me" functionality.          |
 | `created_at`        | `timestamp`                             | `NULLABLE`                         | Timestamp of user creation.               |
@@ -44,14 +44,32 @@ This table stores user information. It's based on the default Laravel `users` ta
 
 ---
 
+### `instructors`
+
+This table stores detailed information about instructors, including their name and description. Each instructor is linked to a user account.
+
+| Column Name   | Data Type      | Constraints                     | Description                               |
+| ------------- | -------------- | ------------------------------- | ----------------------------------------- |
+| `id`          | `bigint`       | `UNSIGNED`, `PRIMARY KEY`, `AI` | Unique identifier for the instructor.     |
+| `user_id`     | `bigint`       | `UNSIGNED`, `FOREIGN KEY`       | The user account associated with this instructor. |
+| `name`        | `varchar(255)` | `NOT NULL`                      | The instructor's display name.            |
+| `description` | `text`         | `NULLABLE`                      | A detailed description or bio of the instructor. |
+| `created_at`  | `timestamp`    | `NULLABLE`                      | Timestamp of instructor creation.         |
+| `updated_at`  | `timestamp`    | `NULLABLE`                      | Timestamp of last instructor update.      |
+
+*Foreign Key:* `instructors(user_id)` -> `users(id)`
+*Unique Constraint:* `(user_id)`
+
+---
+
 ### `courses`
 
-This table contains the main information about each course, including schedule details and cached review data.
+This table contains the main information about each course, including schedule details and cached review count.
 
 | Column Name     | Data Type       | Constraints                     | Description                                       |
 | --------------- | --------------- | ------------------------------- | ------------------------------------------------- |
 | `id`            | `bigint`        | `UNSIGNED`, `PRIMARY KEY`, `AI` | Unique identifier for the course.                 |
-| `author_id`     | `bigint`        | `UNSIGNED`, `FOREIGN KEY`       | The user (instructor) who created the course.     |
+| `instructor_id` | `bigint`        | `UNSIGNED`, `FOREIGN KEY`       | The instructor who created the course.            |
 | `title`         | `varchar(255)`  | `NOT NULL`                      | The title of the course.                          |
 | `slug`          | `varchar(255)`  | `NOT NULL`, `UNIQUE`            | URL-friendly version of the title.                |
 | `description`   | `text`          | `NULLABLE`                      | A detailed description of the course.             |
@@ -62,16 +80,16 @@ This table contains the main information about each course, including schedule d
 | `start_time`    | `time`          | `NULLABLE`                      | The daily start time of course classes.           |
 | `end_time`      | `time`          | `NULLABLE`                      | The daily end time of course classes.             |
 | `total_seats`   | `integer`       | `UNSIGNED`, `NULLABLE`          | The total number of available seats.              |
-| `rating`        | `decimal(2, 1)` | `UNSIGNED`, `DEFAULT 0.0`       | Cached average rating from reviews.               |
 | `total_reviews` | `integer`       | `UNSIGNED`, `DEFAULT 0`         | Cached total number of reviews.                   |
 | `published_at`  | `timestamp`     | `NULLABLE`                      | Timestamp when the course is published.           |
 | `created_at`    | `timestamp`     | `NULLABLE`                      | Timestamp of course creation.                     |
 | `updated_at`    | `timestamp`     | `NULLABLE`                      | Timestamp of last course update.                  |
 
-*Foreign Key:* `courses(author_id)` -> `users(id)`
+*Foreign Key:* `courses(instructor_id)` -> `instructors(id)`
 
 ---
-8+/ghuop-[=][ cvbnm,] ### `learning_objectives`
+
+### `learning_objectives`
 
 This table stores the "What you will learn" points for a course.
 
@@ -91,14 +109,14 @@ This table stores the "What you will learn" points for a course.
 
 This table stores social media links for instructors.
 
-| Column Name | Data Type      | Constraints                     | Description                               |
-| ----------- | -------------- | ------------------------------- | ----------------------------------------- |
-| `id`        | `bigint`       | `UNSIGNED`, `PRIMARY KEY`, `AI` | Unique identifier for the social link.    |
-| `user_id`   | `bigint`       | `UNSIGNED`, `FOREIGN KEY`       | The instructor user this link belongs to. |
-| `platform`  | `varchar(255)` | `NOT NULL`                      | The social media platform (e.g., 'youtube').|
-| `url`       | `varchar(255)` | `NOT NULL`                      | The URL of the social media profile.      |
+| Column Name     | Data Type      | Constraints                     | Description                               |
+| --------------- | -------------- | ------------------------------- | ----------------------------------------- |
+| `id`            | `bigint`       | `UNSIGNED`, `PRIMARY KEY`, `AI` | Unique identifier for the social link.    |
+| `instructor_id` | `bigint`       | `UNSIGNED`, `FOREIGN KEY`       | The instructor this link belongs to.      |
+| `platform`      | `varchar(255)` | `NOT NULL`                      | The social media platform (e.g., 'youtube').|
+| `url`           | `varchar(255)` | `NOT NULL`                      | The URL of the social media profile.      |
 
-*Foreign Key:* `instructor_social_links(user_id)` -> `users(id)`
+*Foreign Key:* `instructor_social_links(instructor_id)` -> `instructors(id)`
 
 ---
 
@@ -362,3 +380,62 @@ This pivot table applies a coupon to an order.
 *Foreign Keys:*
 - `order_coupon(order_id)` -> `orders(id)`
 - `order_coupon(coupon_id)` -> `coupons(id)`
+
+---
+
+## Database Design Summary
+
+This database design supports a comprehensive course application with the following key features:
+
+### Core Entities
+
+1. **Users**: Central authentication and authorization table supporting three roles: admin, instructor, and student.
+
+2. **Instructors**: Dedicated table for instructor-specific information, including name and description. Each instructor is linked to a user account via `user_id`, allowing for separation of authentication (users) and instructor profile data (instructors).
+
+3. **Courses**: Main course content with scheduling information, pricing, and cached review metrics. Each course belongs to an instructor via `instructor_id`.
+
+### Course Structure
+
+- **Courses** are organized into **Modules** (`course_modules`)
+- **Modules** contain **Lessons** (`lessons`)
+- **Learning Objectives** provide structured learning goals for each course
+- **FAQs** offer additional course information
+
+### Instructor Management
+
+- **Instructors** table stores instructor profile information (name, description)
+- **Instructor Social Links** stores social media profiles for each instructor
+- Instructors are linked to users, allowing them to authenticate while maintaining separate profile data
+
+### Enrollment & Progress Tracking
+
+- **Enrollments** track which students are enrolled in which courses (created after successful payment)
+- **Lesson Progress** (`lesson_user`) tracks completion status for individual lessons
+- **Reviews** allow students to rate and review courses
+
+### E-Commerce & Payment System
+
+- **Orders** represent customer purchases
+- **Order Items** use polymorphic relations to support different purchasable items (currently courses)
+- **Payments** track transaction details from payment gateways
+- **Invoices** are generated for paid orders
+- **Coupons** provide discount functionality
+- **Order Addresses** store billing information
+
+### Key Relationships
+
+- `instructors.user_id` → `users.id` (One-to-One: Each instructor has one user account)
+- `courses.instructor_id` → `instructors.id` (Many-to-One: Each course has one instructor)
+- `instructor_social_links.instructor_id` → `instructors.id` (One-to-Many: Each instructor can have multiple social links)
+- `enrollments.user_id` → `users.id` (Many-to-One: Each enrollment belongs to one user)
+- `enrollments.course_id` → `courses.id` (Many-to-One: Each enrollment is for one course)
+- `orders.user_id` → `users.id` (Many-to-One: Each order belongs to one user)
+
+### Design Principles
+
+- **Separation of Concerns**: Authentication (users) is separated from instructor profiles (instructors)
+- **Flexibility**: Support for multiple instructors, each with their own courses and social links
+- **Scalability**: Cached review count for performance; ratings are calculated dynamically from reviews
+- **Data Integrity**: Foreign key constraints ensure referential integrity
+- **User Experience**: Progress tracking, reviews, and FAQs enhance the learning experience
