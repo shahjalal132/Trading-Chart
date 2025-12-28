@@ -12,7 +12,7 @@ class Course extends Model
     use HasFactory;
 
     protected $fillable = [
-        'author_id',
+        'instructor_id',
         'title',
         'slug',
         'description',
@@ -23,7 +23,6 @@ class Course extends Model
         'start_time',
         'end_time',
         'total_seats',
-        'rating',
         'total_reviews',
         'published_at',
     ];
@@ -32,7 +31,6 @@ class Course extends Model
     {
         return [
             'price' => 'decimal:2',
-            'rating' => 'decimal:1',
             'start_date' => 'date',
             'end_date' => 'date',
             'start_time' => 'datetime',
@@ -42,11 +40,19 @@ class Course extends Model
     }
 
     /**
-     * Get the author (instructor) of the course.
+     * Get the instructor of the course.
      */
-    public function author(): BelongsTo
+    public function instructor(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'author_id');
+        return $this->belongsTo(Instructor::class);
+    }
+
+    /**
+     * Get the average rating for the course (calculated from reviews).
+     */
+    public function getRatingAttribute(): float
+    {
+        return $this->reviews()->avg('rating') ?? 0.0;
     }
 
     /**

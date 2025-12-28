@@ -23,7 +23,6 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'bio',
         'avatar_url',
     ];
 
@@ -54,11 +53,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the courses authored by this user (instructor).
+     * Get the instructor profile for this user.
      */
-    public function authoredCourses()
+    public function instructor()
     {
-        return $this->hasMany(Course::class, 'author_id');
+        return $this->hasOne(Instructor::class);
     }
 
     /**
@@ -87,13 +86,6 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
-    /**
-     * Get the social links for this instructor.
-     */
-    public function socialLinks()
-    {
-        return $this->hasMany(InstructorSocialLink::class);
-    }
 
     /**
      * Get the lesson progress for this user.

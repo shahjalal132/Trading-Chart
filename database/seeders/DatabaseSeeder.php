@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Coupon;
+use App\Models\Instructor;
 use App\Models\Order;
 use App\Models\Review;
 use App\Models\User;
@@ -20,8 +21,8 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-        // Create instructors
-        User::factory()->count(5)->create(['role' => 'instructor']);
+        // Create instructors (this will also create associated users)
+        Instructor::factory()->count(5)->create();
 
         // Create students
         User::factory()->count(20)->create(['role' => 'student']);

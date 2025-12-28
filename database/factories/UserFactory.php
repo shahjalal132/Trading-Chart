@@ -29,7 +29,6 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'role' => 'student',
-            'bio' => fake()->optional()->paragraph(),
             'avatar_url' => fake()->optional()->imageUrl(200, 200, 'people', true),
             'remember_token' => Str::random(10),
             'two_factor_secret' => Str::random(10),

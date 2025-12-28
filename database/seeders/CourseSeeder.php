@@ -5,9 +5,9 @@ namespace Database\Seeders;
 use App\Models\Course;
 use App\Models\CourseModule;
 use App\Models\Faq;
+use App\Models\Instructor;
 use App\Models\LearningObjective;
 use App\Models\Lesson;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class CourseSeeder extends Seeder
@@ -15,11 +15,11 @@ class CourseSeeder extends Seeder
     public function run(): void
     {
         // Create instructors
-        $instructors = User::factory()->count(3)->create(['role' => 'instructor']);
+        $instructors = Instructor::factory()->count(3)->create();
 
         // Create courses with related data
         Course::factory()->count(10)->create([
-            'author_id' => fn() => $instructors->random()->id,
+            'instructor_id' => fn() => $instructors->random()->id,
         ])->each(function ($course) {
             // Create learning objectives
             LearningObjective::factory()->count(5)->create([

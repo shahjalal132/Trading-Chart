@@ -8,18 +8,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('instructor_social_links', function (Blueprint $table) {
+        Schema::create('instructors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('instructor_id')->constrained('instructors')->onDelete('cascade');
-            $table->string('platform');
-            $table->string('url');
+            $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('instructor_social_links');
+        Schema::dropIfExists('instructors');
     }
 };
 

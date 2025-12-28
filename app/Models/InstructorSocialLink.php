@@ -11,7 +11,7 @@ class InstructorSocialLink extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'instructor_id',
         'platform',
         'url',
     ];
@@ -21,7 +21,7 @@ class InstructorSocialLink extends Model
      */
     public function instructor(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Instructor::class);
     }
 }
 

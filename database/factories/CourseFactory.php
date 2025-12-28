@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Course;
-use App\Models\User;
+use App\Models\Instructor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CourseFactory extends Factory
@@ -13,7 +13,7 @@ class CourseFactory extends Factory
     public function definition(): array
     {
         return [
-            'author_id' => User::factory(),
+            'instructor_id' => Instructor::factory(),
             'title' => $this->faker->sentence(4),
             'slug' => $this->faker->unique()->slug(),
             'description' => $this->faker->paragraphs(3, true),
@@ -24,7 +24,6 @@ class CourseFactory extends Factory
             'start_time' => $this->faker->time(),
             'end_time' => $this->faker->time(),
             'total_seats' => $this->faker->numberBetween(10, 100),
-            'rating' => $this->faker->randomFloat(1, 0, 5),
             'total_reviews' => $this->faker->numberBetween(0, 100),
             'published_at' => $this->faker->optional()->dateTime(),
         ];

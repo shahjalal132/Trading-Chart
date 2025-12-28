@@ -10,15 +10,14 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->enum('role', ['admin', 'instructor', 'student'])->default('student')->after('password');
-            $table->text('bio')->nullable()->after('role');
-            $table->string('avatar_url')->nullable()->after('bio');
+            $table->string('avatar_url')->nullable()->after('role');
         });
     }
 
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['role', 'bio', 'avatar_url']);
+            $table->dropColumn(['role', 'avatar_url']);
         });
     }
 };

@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('author_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('instructor_id')->constrained('instructors')->onDelete('cascade');
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
@@ -21,7 +21,6 @@ return new class extends Migration
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->unsignedInteger('total_seats')->nullable();
-            $table->decimal('rating', 2, 1)->unsigned()->default(0.0);
             $table->unsignedInteger('total_reviews')->default(0);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
