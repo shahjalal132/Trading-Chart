@@ -9,10 +9,14 @@ use Inertia\Inertia;
 
 class CourseController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Course::with('author')->latest()->paginate(15);
-        return Inertia::render('Admin/Courses/Index', ['courses' => $courses]);
+        $courses = Course::with('author')
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+        
+        return Inertia::render('admin/courses/index', ['courses' => $courses]);
     }
 
     public function create()
